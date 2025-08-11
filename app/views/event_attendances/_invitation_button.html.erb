@@ -1,0 +1,17 @@
+<% if event.event_attendances.accepted.exists?(attendee_id: current_user.id) %>
+  
+  <%= form_with url: event_event_attendance_path(event, event.event_attendances.find_by(attendee_id: current_user.id)),
+                method: :patch, data: { turbo_stream: true } do |form| %>
+    <%= form.hidden_field :invitation_status, value: 0 %>
+    <%= submit_tag "Unattend" %>
+  <% end %>
+
+<% else %>
+
+
+  <%= form_with url: event_event_attendance_path(event, event.event_attendances.find_by(attendee_id: current_user.id)),
+                method: :patch, data: { turbo_stream: true } do |form| %>
+    <%= form.hidden_field :invitation_status, value: 1 %>
+    <%= submit_tag "Attend" %>
+  <% end %>
+<% end %>

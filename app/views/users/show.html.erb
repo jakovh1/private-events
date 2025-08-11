@@ -1,0 +1,23 @@
+<h4>E-Mail: <%= @user.email %></h4>
+<h4>Username: <%= @user.username %></h4>
+
+<% attended, attending = @user.event_attendances.accepted.map(&:event).partition { |event| DateTime.parse("#{event.date} #{event.time}") < DateTime.now } %>
+<span>
+  <p>Attended Events: </p>
+  <ul>
+    <% attended.each do |event| %>
+    <li><%= link_to event.name, event_path(event) %></li>
+    <% end %>
+  </ul>
+</span>
+<span>
+  <p>Attending Events: </p>
+  <ul>
+    <% attending.each do |event| %>
+    <li><%= link_to event.name, event_path(event) %></li>
+    <% end %>
+  </ul>
+</span>
+
+
+

@@ -23,6 +23,12 @@
   </head>
 
   <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <header>
+      <%= render 'shared/auth_links' %>
+      <%= render 'shared/navigation_links' %>
+    </header>
     <%= yield %>
   </body>
 </html>

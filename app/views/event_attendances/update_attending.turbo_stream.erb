@@ -1,0 +1,27 @@
+<%= turbo_stream.replace "attendee-counter" do %>
+    <div id="attendee-counter">
+      <p>Attending: <%= event.attendees.count %></p>
+      <div>
+        - <%= event.event_attendances.accepted.map { |attendence| link_to attendence.attendee.username, user_path(attendence.attendee) }.to_sentence.html_safe %>
+      </div>
+    </div>
+<% end %>
+
+<%= turbo_stream.replace "invitation-counter" do %>
+    <div id="invitation-counter">
+      <p>Sent Invitation: <%= event.event_attendances.pending.count %></p>
+      <div>
+        - <%= event.event_attendances.pending.map { |attendence| link_to attendence.attendee.username, user_path(attendence.attendee) }.to_sentence.html_safe %>
+      </div>
+    </div>
+<% end %>
+
+<%= turbo_stream.replace "attend_button_#{event.id}" do %>
+  <div id="attend_button_<%= event.id %>">
+    <% if event.access == 'open' %>
+      <%= render partial: "event_attendances/attendance_public_button", locals: { event: event } %>
+    <% else %>
+      <%= render partial: "event_attendances/invitation_button", locals: { event: event } %>
+    <% end %>
+  </div>
+<% end %>

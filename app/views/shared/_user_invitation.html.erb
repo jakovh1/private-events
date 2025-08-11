@@ -1,0 +1,9 @@
+<%= form_with url: event_event_attendances_path(event), method: :post, local: true do |form| %>
+  <h3>Invite someone!</h5>
+  <div>
+    <%= form.label :attendee_username %>
+    <%= form.text_field :attendee_username, placeholder: "Enter Attendee's Username here", required: true %>
+  </div>
+
+  <%= form.submit value="Invite" %>
+<% end %>

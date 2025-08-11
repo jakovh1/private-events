@@ -1,0 +1,40 @@
+<%= form_with model: event do |form| %>
+  <% @event.errors.full_messages_for(:name).each do |message| %>
+    <div><%= message %></div>
+  <% end %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name, value: @event[:name], placeholder: "Enter name here", required: true %>
+  </div>
+
+  <% @event.errors.full_messages_for(:description).each do |message| %>
+    <div><%= message %></div>
+  <% end %>
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description, value: @event[:description], placeholder: "Enter description here", required: true %>
+  </div>
+
+  <% @event.errors.full_messages_for(:date).each do |message| %>
+    <div><%= message %></div>
+  <% end %>
+  <div>
+    <%= form.label :date %>
+    <%= form.date_field :date, value: @event[:date], placeholder: "Select date", required: true %>
+  </div>
+
+  <% @event.errors.full_messages_for(:time).each do |message| %>
+    <div><%= message %></div>
+  <% end %>
+  <div>
+    <%= form.label :time %>
+    <%= form.time_field :time, value: @event[:time], placeholder: "Select time", required: true %>
+  </div>
+
+  <div>
+    <%= form.label :access %>
+    <%= form.select :access, [["Restricted", "restricted"], ["Open", "open"]], value: @event[:access], selected: "restricted", required: true %>
+  </div>
+
+  <%= form.submit %>
+<% end %>

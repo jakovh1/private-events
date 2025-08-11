@@ -1,0 +1,34 @@
+<h1><%= @event.name %></h1>
+<p><%= @event.date %></p>
+<p><%= @event.time %></p>
+<p><%= @event.description %></p>
+<div id="attendee-counter">
+  <p>Attending: <%= @event.event_attendances.accepted.count %></p>
+  <div>
+    - <%= @event.event_attendances.accepted.map { |attendance| link_to attendance.attendee.username, user_path(attendance.attendee) }.to_sentence.html_safe %>
+  </div>
+</div>
+<br />
+
+<% if user_signed_in? && current_user.id == @event.creator_id %>
+  <div id="attend_button_<%= @event.id %>">
+    <%= render '/shared/user_invitation', event: @event %>
+  </div>
+  <br />
+  <%= link_to 'Edit this event', edit_event_path %>
+  <%= link_to 'Delete this event', event_path(@event), data: {
+                                              turbo_method: :delete,
+                                              turbo_confirm: "Are you sure?"
+                                              }
+  %>
+<% elsif user_signed_in? && @event.access == 'restricted' && @event.attendees.include?(current_user) %>
+  <div id="attend_button_<%= @event.id %>">
+    <%= render partial: 'event_attendances/invitation_button', locals: { event: @event } %>
+  </div>
+<% elsif user_signed_in? && @event.access == 'open' %>
+  <div id="attend_button_<%= @event.id %>">
+    <%= render partial: 'event_attendances/attendance_public_button', locals: { event: @event } %>
+  </div>
+<% end %>
+<br />
+<%= link_to 'Get back to Feed', root_path %>

@@ -1,0 +1,45 @@
+
+<% if user_signed_in? && @available_events.exists? %>
+  <h2>Events Invitations</h2>
+  <ul>
+    <% @available_events.each do |event| %>
+      <li>
+        <%= link_to event.name, event_path(event) %>
+        <br />
+        <div id="attend_button_<%= event.id %>">
+          <% if event.access == 'restricted' %>
+            <%= render partial: 'event_attendances/invitation_button', locals: { event: event } %>
+          <% else %>
+            <%= render partial: 'event_attendances/attendance_public_button', locals: { event: event } %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<h2>Events</h2>
+<ul>
+  <h2>Upcoming Events</h2>
+  <% @upcoming_events.each do |event| %>
+    <li>
+      <h3><%= link_to event.name, event_path(event) %></h4>
+      <span><%= event.date %>, <%= event.time %></span>
+      <p><%= event.description %></p>
+    </li>
+  <% end %>
+</ul> 
+
+<ul>
+  <h2>Past Events</h2>
+  <% @past_events.each do |event| %>
+    <li>
+      <h3><%= link_to event.name, event_path(event) %></h4>
+      <span><%= event.date %>, <%= event.time %></span>
+      <p><%= event.description %></p>
+    </li>
+  <% end %>
+</ul>
+
+<% if user_signed_in? %>
+  <%= link_to 'Create New Event', new_event_path %>
+<% end %>
