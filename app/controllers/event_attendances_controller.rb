@@ -3,10 +3,10 @@ class EventAttendancesController < ApplicationController
 
   def create
     @event = Event.find(params[:event_id])
+    @attendee = User.find_by(username: params[:attendee_username])
     already_invited = @event.event_attendances.exists?(attendee: @attendee)
 
     if @event.creator_id == current_user.id
-      @attendee = User.find_by(username: params[:attendee_username])
 
       if already_invited
         flash[:alert] = "#{params[:attendee_username]} is already invited."
@@ -25,7 +25,7 @@ class EventAttendancesController < ApplicationController
 
         end
       else
-        flash[:alert] = "User #{@attendee.username} does not exist."
+        flash[:alert] = "User #{params[:attendee_username]} does not exist."
         redirect_to event_path(@event)
 
       end

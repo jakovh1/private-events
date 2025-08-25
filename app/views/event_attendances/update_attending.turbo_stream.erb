@@ -1,6 +1,6 @@
 <%= turbo_stream.replace "attendee-counter" do %>
     <div id="attendee-counter">
-      <p>Attending: <%= event.attendees.count %></p>
+      <p>Attending: <%= event.event_attendances.accepted.count %></p>
       <div>
         - <%= event.event_attendances.accepted.map { |attendence| link_to attendence.attendee.username, user_path(attendence.attendee) }.to_sentence.html_safe %>
       </div>
